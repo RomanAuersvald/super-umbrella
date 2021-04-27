@@ -19,8 +19,7 @@ services:
       - eureka
       - mongo-db
     environment:
-      - JAVA_OPTS=
-        -DEUREKA_SERVER=http://eureka:8761/eureka
+        - EUREKA_SERVER=http://eureka:8761/eureka
     ports:
       - "9000:9000"
 
@@ -35,8 +34,7 @@ services:
       - reported-app
       - mongo-db
     environment:
-      - JAVA_OPTS=
-        -DEUREKA_SERVER=http://eureka:8761/eureka
+      - EUREKA_SERVER=http://eureka:8761/eureka
     ports:
       - "8000:8000"
     
