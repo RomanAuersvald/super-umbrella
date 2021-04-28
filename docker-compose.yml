@@ -15,6 +15,8 @@ services:
     build:
       context: ./Reported
       dockerfile: Dockerfile
+    links:
+      - mongo-db:app_db
     depends_on:
       - eureka
       - mongo-db
@@ -29,6 +31,8 @@ services:
     build:
       context: ./ReportedInvoice
       dockerfile: Dockerfile
+    links:
+      - mongo-db:app_db
     depends_on:
       - eureka
       - reported-app
@@ -39,12 +43,7 @@ services:
       - "8000:8000"
     
   mongo-db:
-    container_name: reported-mongodb
-    image: mongo:3.6
+    image: mongo:latest
     restart: always
-    environment:
-      - MONGO_DATA_DIR=/data/db
-      - MONGO_LOG_DIR=/dev/null
     ports:
-      - "27017:27017"
-    command: mongod --smallfiles --logpath=/dev/null # --quiet
+      - 27017:27017
