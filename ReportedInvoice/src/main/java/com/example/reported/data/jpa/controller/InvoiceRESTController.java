@@ -121,11 +121,7 @@ public class InvoiceRESTController {
             return null;
         }
     }
-}
 
 
-class InvoiceNotFoundException extends RuntimeException {
-    InvoiceNotFoundException(String id) {
-        super("Could not find Invoice " + id);
-    }
+
 }
