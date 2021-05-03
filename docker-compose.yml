@@ -41,6 +41,23 @@ services:
       - EUREKA_SERVER=http://eureka:8761/eureka
     ports:
       - "8000:8000"
+      
+  logging-service:
+    image: reported-logging-service
+    restart: on-failure
+    build:
+      context: ./logging
+      dockerfile: Dockerfile
+    links:
+      - mongo-db:app_db
+    depends_on:
+      - eureka
+      - reported-app
+      - mongo-db
+    environment:
+      - EUREKA_SERVER=http://eureka:8761/eureka
+    ports:
+      - "7000:1000"
     
   mongo-db:
     image: mongo:latest
