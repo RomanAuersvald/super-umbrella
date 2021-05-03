@@ -2,10 +2,7 @@ package com.example.reported.data.jpa.controller;
 
 
 import com.example.reported.data.jpa.dao.InvoiceRepository;
-import com.example.reported.data.jpa.model.Address;
 import com.example.reported.data.jpa.model.Invoice;
-import com.example.reported.data.jpa.model.ProjectTask;
-import com.example.reported.data.jpa.model.ReportedUser;
 import com.example.reported.data.jpa.service.InvoiceService;
 import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.Optional;
 
 @RequestMapping(path = "/invoices")
 @RestController
@@ -35,29 +33,39 @@ public class InvoiceRESTController {
 
     // get All
     @GetMapping(path= "/all/{userID}")
-    public ResponseEntity<Collection> getAllInvoices(@PathVariable String userID)
-    {
+    public ResponseEntity<Collection> getAllInvoices(@PathVariable String userID) {
         Collection<Invoice> invoices = invoiceRepository.findAllByUserId(userID);
         return ResponseEntity.ok().body(invoices);
     }
 
     // save
     @PostMapping("")
-    Invoice newInvoice(@RequestBody Invoice newInvoice) {
-        return invoiceRepository.save(newInvoice);
+    ResponseEntity<Invoice> newInvoice(@RequestBody Invoice newInvoice) {
+        invoiceRepository.save(newInvoice);
+        System.out.println("invoice saved");
+        return ResponseEntity.ok().build();
     }
 
     //get by ID
     @GetMapping("/{id}")
-    Invoice oneInvoice(@PathVariable String id) {
-        return invoiceRepository.findById(id)
-                .orElseThrow(() -> new InvoiceNotFoundException(id));
+    ResponseEntity<Invoice> oneInvoice(@PathVariable String id) {
+        Optional<Invoice> loadedInvoice = invoiceRepository.findById(id);
+        if (loadedInvoice.get() != null) {
+            return ResponseEntity.ok().body(loadedInvoice.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // delete by ID
-    @DeleteMapping("/{id}")
-    void deleteInvoice(@PathVariable String id) {
-        invoiceRepository.deleteById(id);
+    @GetMapping("/delete/{id}")
+    ResponseEntity deleteInvoice(@PathVariable String id) {
+        if (invoiceRepository.findById(id) != null) {
+            invoiceRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/getPDF/{id}")

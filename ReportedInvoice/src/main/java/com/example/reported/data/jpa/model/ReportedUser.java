@@ -88,7 +88,6 @@ public class ReportedUser{
                 firstName, lastName);
     }
 
-
     public List<String> getRoleList(){
         if(this.role.length() > 0) {
             return Arrays.asList(this.role.split(","));
