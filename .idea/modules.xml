@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/ReportedInvoice/microservice.iml" filepath="$PROJECT_DIR$/ReportedInvoice/microservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/Reported/securing-web.iml" filepath="$PROJECT_DIR$/Reported/securing-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/spa/spa.iml" filepath="$PROJECT_DIR$/spa/spa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sparest/sparest.iml" filepath="$PROJECT_DIR$/sparest/sparest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/super-umbrella.iml" filepath="$PROJECT_DIR$/.idea/super-umbrella.iml" />
     </modules>
   </component>
