@@ -3,6 +3,16 @@ package com.reported.sparest.auth.model;
 public class AuthenticationResponse {
 
     private String username;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    private String userId;
     private String token;
 
     public String getToken() {
