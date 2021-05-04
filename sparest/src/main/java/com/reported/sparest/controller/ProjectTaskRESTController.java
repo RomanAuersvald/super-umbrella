@@ -1,9 +1,13 @@
 package com.reported.sparest.controller;
 
+import com.reported.sparest.dao.ProjectRepository;
 import com.reported.sparest.dao.ProjectTaskRepository;
+import com.reported.sparest.model.Project;
 import com.reported.sparest.model.ProjectTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -15,6 +19,9 @@ public class ProjectTaskRESTController {
 
     @Autowired
     private ProjectTaskRepository projectTaskRepository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
 
     // get All
     @GetMapping(path= "/all/{projectId}")
@@ -44,6 +51,34 @@ public class ProjectTaskRESTController {
         }else{
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/startTaskEntry/{id}")
+    ResponseEntity<ProjectTask> startTaskEntry(@PathVariable String id) {
+        Optional<ProjectTask> loadedTask = projectTaskRepository.findById(id);
+        if (loadedTask.get() != null) {
+            loadedTask.get().newTaskEntry(); // zahájení nové entry - no shit
+            projectTaskRepository.save(loadedTask.get());
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/endTaskEntry/{id}")
+    ResponseEntity<ProjectTask> endTaskEntry(@PathVariable String id) {
+        Optional<ProjectTask> loadedTask = projectTaskRepository.findById(id);
+        if (loadedTask.get() != null) {
+            loadedTask.get().endLastTaskEntry();
+            projectTaskRepository.save(loadedTask.get());
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    private Authentication getLoggeUser(){
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
 }
