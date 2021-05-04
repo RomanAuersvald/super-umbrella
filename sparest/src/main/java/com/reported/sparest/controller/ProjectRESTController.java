@@ -20,6 +20,7 @@ public class ProjectRESTController {
 
 
     // get All
+    @CrossOrigin
     @GetMapping(path= "/all/{userID}")
     public ResponseEntity<Collection> getAllInvoices(@PathVariable String userID) {
         Collection<Project> projects = projectRepository.findProjectsByOwnerId(userID);
@@ -27,6 +28,7 @@ public class ProjectRESTController {
     }
 
     //get by ID
+    @CrossOrigin
     @GetMapping("/{id}")
     ResponseEntity<Project> oneInvoice(@PathVariable String id) {
         Optional<Project> loadedProject = projectRepository.findById(id);

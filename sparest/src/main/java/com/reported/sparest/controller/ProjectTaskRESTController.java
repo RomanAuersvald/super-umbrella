@@ -24,6 +24,7 @@ public class ProjectTaskRESTController {
     private ProjectRepository projectRepository;
 
     // get All
+    @CrossOrigin
     @GetMapping(path= "/all/{projectId}")
     public ResponseEntity<Collection> getAllInvoices(@PathVariable String projectId) {
         Collection<ProjectTask> tasks = projectTaskRepository.findProjectTasksByProjectId(projectId);
@@ -31,6 +32,7 @@ public class ProjectTaskRESTController {
     }
 
     //get by ID
+    @CrossOrigin
     @GetMapping("/{id}")
     ResponseEntity<ProjectTask> oneInvoice(@PathVariable String id) {
         Optional<ProjectTask> loadedTask = projectTaskRepository.findById(id);
@@ -41,6 +43,7 @@ public class ProjectTaskRESTController {
         }
     }
 
+    @CrossOrigin
     @PostMapping("/complete/{id}")
     ResponseEntity<ProjectTask> completeTask(@PathVariable String id) {
         Optional<ProjectTask> loadedTask = projectTaskRepository.findById(id);
@@ -53,6 +56,7 @@ public class ProjectTaskRESTController {
         }
     }
 
+    @CrossOrigin
     @PostMapping("/startTaskEntry/{id}")
     ResponseEntity<ProjectTask> startTaskEntry(@PathVariable String id) {
         Optional<ProjectTask> loadedTask = projectTaskRepository.findById(id);
@@ -65,6 +69,7 @@ public class ProjectTaskRESTController {
         }
     }
 
+    @CrossOrigin
     @PostMapping("/endTaskEntry/{id}")
     ResponseEntity<ProjectTask> endTaskEntry(@PathVariable String id) {
         Optional<ProjectTask> loadedTask = projectTaskRepository.findById(id);
