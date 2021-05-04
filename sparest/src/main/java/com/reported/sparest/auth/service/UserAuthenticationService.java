@@ -3,13 +3,16 @@ package com.reported.sparest.auth.service;
 import com.reported.sparest.auth.exception.FailedToLoginException;
 import com.reported.sparest.auth.exception.JwtAuthenticationException;
 import com.reported.sparest.auth.model.User;
+import com.reported.sparest.dao.UserRepository;
 import com.reported.sparest.model.ReportedUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UserAuthenticationService {
@@ -20,13 +23,23 @@ public class UserAuthenticationService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     public String authenticateUser(String username, String password) throws FailedToLoginException {
         boolean isAuthenticated = false;
-        if (username.equals("chathuranga") && password.equals("test123")) {
-            isAuthenticated = true;
-        } else if (username.equals("bob") && password.equals("test123")) {
-            isAuthenticated = true;
-        }
+
+        Optional<ReportedUser> optionalUser = Optional.ofNullable(userRepository.findByUsername(username));
+        if (optionalUser.isPresent()){
+            //String encodedPassword = passwordEncoder.encode(password);
+            //if (optionalUser.get().getPassword() == encodedPassword ){
+                isAuthenticated = true;
+            }else{
+                isAuthenticated = false;
+            }
+        //}
 
         if (isAuthenticated) {
             try {
