@@ -64,20 +64,36 @@
   <!--    </style>-->
   <script>
     $(document).ready(function () {
-
       $("#login").submit(function (event) {
-
         //stop submit the form, we will post it manually.
         event.preventDefault();
-
         fire_ajax_submit();
-
       });
-
     });
 
-    function fire_ajax_submit() {
+    function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
 
+    function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires="+ d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;secure";
+    }
+
+    function fire_ajax_submit() {
       var data = {}
       data["username"] = $("#username").val();
       data["password"] = $("#password").val();
@@ -94,20 +110,34 @@
         cache: false,
         timeout: 600000,
         success: function (data) {
+          var obj = JSON.parse(JSON.stringify(data, null, 4));
+          //delete old cookies
+          document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          document.cookie = "userid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          //create new one
+          // document.cookie = "token=mySuperSecuritedToken; secure";
+          // document.cookie = "userid=MySuperID; secure";
+          setCookie("token", obj.token, 1);
+          setCookie("userid", obj.userId, 1);
+          setCookie("username", obj.username, 1);
+          var cookie = document.cookie;
+          console.log(cookie);
+          console.log(JSON.stringify(data, null, 4));
 
-          var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
-                  + JSON.stringify(data, null, 4) + "&lt;/pre&gt;";
-          $('#feedback').html(json);
+          // var json = "<h4>Ajax Response</h4>" + JSON.stringify(data, null, 4);
+          msg = 'Byl jsi prihlasen.';
+          $('#feedback').html(msg);
 
           console.log("SUCCESS : ", data);
           $("#login").prop("disabled", false);
-
+          window.location.replace("index.html");
         },
         error: function (e) {
 
-          var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
-                  + e.responseText + "&lt;/pre&gt;";
-          $('#feedback').html(json);
+          // var json = "<h4>Ajax Response</h4>" + e.responseText;
+          var msg = 'Zadali jste špatné heslo.';
+          $('#feedback').html(msg);
 
           console.log("ERROR : ", e);
           $("#login").prop("disabled", false);
