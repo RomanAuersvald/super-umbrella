@@ -14,6 +14,7 @@ public class LoginController {
     @Autowired
     private UserAuthenticationService authenticationService;
 
+    @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public AuthenticationResponse userLogin(@RequestBody UserCredentials userCredentials) throws FailedToLoginException {
