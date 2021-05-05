@@ -1,183 +1,182 @@
-<!doctype html>
-<!--
-  Material Design Lite
-  Copyright 2015 Google Inc. All rights reserved.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      https://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License
--->
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <title>Material Design Lite</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Reported SPA</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="css/mdb.min.css" />
 
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" sizes="192x192" href="_images/android-desktop.png">
+    <!-- Custom styles -->
+<!--    <link rel="stylesheet" href="css/style.css" />-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
 
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Material Design Lite">
-  <link rel="apple-touch-icon-precomposed" href="_images/ios-desktop.png">
+    <script>
+        $(document).ready(function () {
+            $("#login").submit(function (event) {
+                //stop submit the form, we will post it manually.
+                event.preventDefault();
+                fire_ajax_submit();
+            });
+        });
 
-  <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-  <meta name="msapplication-TileColor" content="#3372DF">
-
-  <link rel="shortcut icon" href="_images/favicon.png">
-
-  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-  <!--
-  <link rel="canonical" href="http://www.example.com/">
-  -->
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-orange.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
-  <!--    <script type="text/javascript" src="main.js"></script>-->
-  <!--    <style>-->
-  <!--    #view-source {-->
-  <!--      position: fixed;-->
-  <!--      display: block;-->
-  <!--      right: 0;-->
-  <!--      bottom: 0;-->
-  <!--      margin-right: 40px;-->
-  <!--      margin-bottom: 40px;-->
-  <!--      z-index: 900;-->
-  <!--    }-->
-  <!--    </style>-->
-  <script>
-    $(document).ready(function () {
-      $("#login").submit(function (event) {
-        //stop submit the form, we will post it manually.
-        event.preventDefault();
-        fire_ajax_submit();
-      });
-    });
-
-    function getCookie(cname) {
-      var name = cname + "=";
-      var ca = document.cookie.split(';');
-      for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-          c = c.substring(1);
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
         }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;secure";
         }
-      }
-      return "";
-    }
 
-    function setCookie(cname, cvalue, exdays) {
-      var d = new Date();
-      d.setTime(d.getTime() + (exdays*24*60*60*1000));
-      var expires = "expires="+ d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;secure";
-    }
+        function fire_ajax_submit() {
+            var data = {}
+            data["username"] = $("#username").val();
+            data["password"] = $("#password").val();
+            console.log(data);
 
-    function fire_ajax_submit() {
-      var data = {}
-      data["username"] = $("#username").val();
-      data["password"] = $("#password").val();
-      console.log(data);
+            $("#login").prop("disabled", true);
 
-      $("#login").prop("disabled", true);
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "http://localhost:9001/login",
+                data: JSON.stringify(data),
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    var obj = JSON.parse(JSON.stringify(data, null, 4));
+                    //delete old cookies
+                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "userid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //create new one
+                    // document.cookie = "token=mySuperSecuritedToken; secure";
+                    // document.cookie = "userid=MySuperID; secure";
+                    setCookie("token", obj.token, 1);
+                    setCookie("userid", obj.userId, 1);
+                    setCookie("username", obj.username, 1);
+                    var cookie = document.cookie;
+                    console.log(cookie);
+                    console.log(JSON.stringify(data, null, 4));
 
-      $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "http://localhost:9001/login",
-        data: JSON.stringify(data),
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-          var obj = JSON.parse(JSON.stringify(data, null, 4));
-          //delete old cookies
-          document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          document.cookie = "userid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          //create new one
-          // document.cookie = "token=mySuperSecuritedToken; secure";
-          // document.cookie = "userid=MySuperID; secure";
-          setCookie("token", obj.token, 1);
-          setCookie("userid", obj.userId, 1);
-          setCookie("username", obj.username, 1);
-          var cookie = document.cookie;
-          console.log(cookie);
-          console.log(JSON.stringify(data, null, 4));
+                    // var json = "<h4>Ajax Response</h4>" + JSON.stringify(data, null, 4);
+                    msg = 'Byl jsi prihlasen.';
+                    $('#feedback').html(msg);
 
-          // var json = "<h4>Ajax Response</h4>" + JSON.stringify(data, null, 4);
-          msg = 'Byl jsi prihlasen.';
-          $('#feedback').html(msg);
+                    console.log("SUCCESS : ", data);
+                    $("#login").prop("disabled", false);
+                    window.location.replace("index.html");
+                },
+                error: function (e) {
 
-          console.log("SUCCESS : ", data);
-          $("#login").prop("disabled", false);
-          window.location.replace("index.html");
-        },
-        error: function (e) {
+                    // var json = "<h4>Ajax Response</h4>" + e.responseText;
+                    var msg = 'Zadali jste špatné heslo.';
+                    $('#feedback').html(msg);
 
-          // var json = "<h4>Ajax Response</h4>" + e.responseText;
-          var msg = 'Zadali jste špatné heslo.';
-          $('#feedback').html(msg);
+                    console.log("ERROR : ", e);
+                    $("#login").prop("disabled", false);
 
-          console.log("ERROR : ", e);
-          $("#login").prop("disabled", false);
+                }
+            });
 
         }
-      });
-
-    }
-  </script>
+    </script>
 </head>
 <body>
-<div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
-  <main class="mdl-layout__content">
-    <div class="demo-blog__posts mdl-grid">
-      <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col">
-        <div id="feedback"></div>
-        <div class="mdl-card__media mdl-color-text--grey-50">
-          <form action="#" id="login">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" id="username">
-              <label class="mdl-textfield__label" for="username">Username</label>
+      <!--Main Navigation-->
+  <header>
+    <style>
+      #intro {
+        background-image: url(img/logo_white.png);
+        height: 100vh;
+      }
+
+      /* Height for devices larger than 576px */
+      @media (min-width: 992px) {
+        #intro {
+          margin-top: -58.59px;
+        }
+      }
+
+      .navbar .nav-link {
+        color: #fff !important;
+      }
+    </style>
+
+    <!-- Background image -->
+    <div id="intro" class="bg-image shadow-2-strong">
+      <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-md-8">
+
+              <form class="bg-white rounded shadow-5-strong p-5" id="login">
+                  <div id="feedback"></div>
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input type="text" id="username" class="form-control" />
+                  <label class="form-label" for="username">Username</label>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                  <input type="password" id="password" class="form-control" />
+                  <label class="form-label" for="password">Password</label>
+                </div>
+
+                <!-- 2 column grid layout for inline styling -->
+<!--                <div class="row mb-4">-->
+<!--                  <div class="col d-flex justify-content-center">-->
+<!--                    &lt;!&ndash; Checkbox &ndash;&gt;-->
+<!--                    <div class="form-check">-->
+<!--                      <input class="form-check-input" type="checkbox" value="" id="" checked />-->
+<!--                      <label class="form-check-label" for="form1Example3">-->
+<!--                        Remember me-->
+<!--                      </label>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  <div class="col text-center">-->
+<!--                    &lt;!&ndash; Simple link &ndash;&gt;-->
+<!--                    <a href="#!">Forgot password?</a>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+              </form>
             </div>
-            <div class="mdl-textfield mdl-js-textfield">
-              <input class="mdl-textfield__input" type="text" id="password">
-              <label class="mdl-textfield__label" for="password">Password</label>
-            </div>
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-              Login
-            </button>
-          </form>
-        </div>
-      </div>
-      <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
-        <div class="mdl-color--white mdl-color-text--grey-600">
-          <img src="images/logo.png">
+          </div>
         </div>
       </div>
     </div>
-  </main>
-  <div class="mdl-layout__obfuscator"></div>
-</div>
+    <!-- Background image -->
+  </header>
+    <!--Main Navigation-->
+      <!-- MDB -->
+      <script type="text/javascript" src="js/mdb.min.js"></script>
+      <!-- Custom scripts -->
+<!--      <script type="text/javascript" src="js/script.js"></script>-->
 </body>
 </html>
