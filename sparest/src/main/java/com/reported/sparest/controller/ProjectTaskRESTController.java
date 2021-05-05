@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 
-@RestController("/tasks")
+@RestController
+@RequestMapping("/tasks")
 public class ProjectTaskRESTController {
 
     @Autowired
