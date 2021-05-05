@@ -20,7 +20,6 @@
         window.stop();
         window.location.replace("login.html");
     }
-    document.getElementById("sayhitouser").innerHTML = getCookie("username");
 </script>
 <html lang="en">
 <head>
@@ -57,6 +56,49 @@
             document.cookie = "userid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             location.reload();
+        }
+
+        function taskStart(id){
+            console.log('http://localhost:9001/tasks/endTaskEntry/' + id);
+            $.ajax({
+                url: 'http://localhost:9001/tasks/startTaskEntry/' + id,
+                type: 'GET',
+                // contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + getCookie("token"),
+                },
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+        }
+
+        function taskStop(id){
+            console.log('http://localhost:9001/tasks/endTaskEntry/' + id);
+            $.ajax({
+                url: 'http://localhost:9001/tasks/endTaskEntry/' + id,
+                type: 'GET',
+                // contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + getCookie("token"),
+                },
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+
         }
 
         function getDateTime() {
@@ -105,6 +147,22 @@
                 timeout: 600000,
                 success: function (result) {
                     console.log(result);
+                    var tmp = "#" + s
+                    var $newsList = $(tmp);
+                    console.log($newsList);
+                    $.each(result, function(i, v) {
+                        $('<li class="list-group-item">')
+                            .append($('<div class="container">').
+                                append($('<div class="row">').
+                            append($('<div class="col-md-8">').html(v.taskName))
+                            .append(
+                                ($('<div class="col-md-4">').append(
+                                    $('<a class="btn btn-primary" style="background-color: #ed302f" href="#" role="button" onclick="taskStart(' + v.id + ')">').append($('<i class="fas fa-play">'))
+                                )
+                                )
+                            ))).appendTo($newsList);
+                    });
+                    // return v.id;
                 },
                 error: function (error) {
                     console.log(error);
@@ -158,7 +216,7 @@
                     }
                     console.log(v);
                     $('<div class="card mb-4">')
-                        .append($('<div class="card-header">').html(v.name + " (" + v.id + ")"))
+                        .append($('<div class="card-header">').html(v.name))
                         .append($('<div class="card">').html('<img src="img/logo_black.png" class="card-img-top" alt="..." />'))
                         .append($('<div class="card-body">')
                             .append(
@@ -167,22 +225,7 @@
                             // .append($('<a href="#" class="btn btn-primary">').html('Get Started'))
                             // .append($('<a href="#" class="btn btn-primary">').html('Complete'))
                             // .append($('<a href="#" class="btn btn-primary">').html('Detail'))
-                            .append($('<hr><ul class="list-group list-group-flush">').append(
-                                $('<li class="list-group-item">').append(
-                                    $('<div class="container">').append(
-                                        $('<div class="row">').append(
-                                            $('<div class="col-md-8">').html('Task #1')
-                                        )
-                                            .append(
-                                                $('<div class="col-md-4">').append(
-                                                    $('<a class="btn btn-primary" style="background-color: #ed302f" href="#" role="button">').append(
-                                                        $('<i class="fas fa-play">')
-                                                    )
-                                                )
-                                            )
-                                    )
-                                )
-                            )
+                            .append($('<hr><ul class="list-group list-group-flush" id="' + v.id + '">')
                         )
                         .append($('<div class="card-footer text-muted">').html(v.projectStart))
                         )
@@ -203,7 +246,7 @@
   <!-- Section: Components -->
   <section class="">
     <section id="demo" class="">
-      <h3 class="text-center"><strong>Hi there, <span id="sayhitouser"></span> !</strong></h3>
+      <h3 class="text-center"><strong>Hi there, <span id="sayhitouser"></span>!</strong></h3>
         <div class="row justify-content-between">
             <div class="col-2">
                 <div id="digital-clock" class="btn btn-warning my-2 my-sm-0"></div>
@@ -249,6 +292,9 @@
 <!-- End your project here-->
 
 <!-- MDB -->
+<script>
+    $("#sayhitouser").html(getCookie("username"));
+</script>
 <script type="text/javascript" src="js/mdb.min.js"></script>
 </body>
 </html>
