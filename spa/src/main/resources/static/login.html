@@ -18,6 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
 
     <script>
+        var ip = '172.104.136.93'; //localhost
+
         $(document).ready(function () {
             $("#login").submit(function (event) {
                 //stop submit the form, we will post it manually.
@@ -59,7 +61,7 @@
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "http://localhost:9001/login",
+                url: "http://" + ip + ":9001/login",
                 data: JSON.stringify(data),
                 dataType: 'json',
                 cache: false,
