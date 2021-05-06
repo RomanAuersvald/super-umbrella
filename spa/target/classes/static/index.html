@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    var check = getCookie("token");
+    if (check == ""){
+        window.stop();
+        window.location.replace("login.html");
+    }
+    document.getElementById("sayhitouser").innerHTML = getCookie("username");
+</script>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Material Design for Bootstrap</title>
+  <!-- MDB icon -->
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+  <!-- Font Awesome -->
+  <link
+          rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+  />
+  <!-- Google Fonts Roboto -->
+  <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+  />
+  <!-- Dark MDB theme -->
+  <link rel="stylesheet" href="css/mdb.dark.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+  <!-- Regular MDB theme -->
+  <!-- <link rel="stylesheet" href="css/mdb.min.css" /> -->
+    <script>
+        function logout(){
+            //delete old cookies
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "userid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            location.reload();
+        }
+
+        function getDateTime() {
+            var now     = new Date();
+            var year    = now.getFullYear();
+            var month   = now.getMonth()+1;
+            var day     = now.getDate();
+            var hour    = now.getHours();
+            var minute  = now.getMinutes();
+            var second  = now.getSeconds();
+            if(month.toString().length == 1) {
+                month = '0'+month;
+            }
+            if(day.toString().length == 1) {
+                day = '0'+day;
+            }
+            if(hour.toString().length == 1) {
+                hour = '0'+hour;
+            }
+            if(minute.toString().length == 1) {
+                minute = '0'+minute;
+            }
+            if(second.toString().length == 1) {
+                second = '0'+second;
+            }
+            var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
+            return dateTime;
+        }
+
+        // example usage: realtime clock
+        setInterval(function(){
+            currentTime = getDateTime();
+            document.getElementById("digital-clock").innerHTML = currentTime;
+        }, 100);
+
+        function callTaskAjax(s){
+            $.ajax({
+                url: 'http://localhost:9001/tasks/all/' + s,
+                type: 'GET',
+                // contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + getCookie("token"),
+                },
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+        };
+
+
+        // var customXMLHttpRequest = (function (jwtoken) {
+        //
+        //     function getXMLHttpRequest(method, url, async){
+        //         var xmlHttpRequest = new XMLHttpRequest();
+        //         xmlHttpRequest.open(method, url, async);
+        //         xmlHttpRequest.setRequestHeader('Authorization', 'Bearer ' + jwtoken);
+        //         return xmlHttpRequest;
+        //     }
+        //
+        //     return getXMLHttpRequest;
+        // })(getCookie("token"));
+        //
+        // var xmlHttpRequest = customXMLHttpRequest('get',"http://localhost:9001/projects/all/" + getCookie("userid"),true);
+        // xmlHttpRequest.send();
+        // console.log(xmlHttpRequest.response);
+        // console.log(xmlHttpRequest.responseText);
+
+        $.ajax({
+            url: 'http://localhost:9001/projects/all/' + getCookie("userid"),
+            type: 'GET',
+            // contentType: 'application/json',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie("token"),
+            },
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+            success: function (result) {
+                var tmp = 1;
+                // CallBack(result);
+                console.log(result);
+                $.each(result, function( i,v){
+                    callTaskAjax(v.id);
+                    if(tmp == 1){
+                        var $res = $('#showproject1');
+                        tmp++;
+                    }else if (tmp == 2){
+                        var $res = $('#showproject2');
+                        tmp++;
+                    }else if (tmp == 3){
+                        var $res = $('#showproject3');
+                        tmp = 1;
+                    }
+                    console.log(v);
+                    $('<div class="card mb-4">')
+                        .append($('<div class="card-header">').html(v.name + " (" + v.id + ")"))
+                        .append($('<div class="card">').html('<img src="img/logo_black.png" class="card-img-top" alt="..." />'))
+                        .append($('<div class="card-body">')
+                            .append(
+                                $('<h5 class="card-title">').html(v.description))
+                            .append($('<p class="card-text">').html(v.longDescription))
+                            // .append($('<a href="#" class="btn btn-primary">').html('Get Started'))
+                            // .append($('<a href="#" class="btn btn-primary">').html('Complete'))
+                            // .append($('<a href="#" class="btn btn-primary">').html('Detail'))
+                            .append($('<hr><ul class="list-group list-group-flush">').append(
+                                $('<li class="list-group-item">').append(
+                                    $('<div class="container">').append(
+                                        $('<div class="row">').append(
+                                            $('<div class="col-md-8">').html('Task #1')
+                                        )
+                                            .append(
+                                                $('<div class="col-md-4">').append(
+                                                    $('<a class="btn btn-primary" style="background-color: #ed302f" href="#" role="button">').append(
+                                                        $('<i class="fas fa-play">')
+                                                    )
+                                                )
+                                            )
+                                    )
+                                )
+                            )
+                        )
+                        .append($('<div class="card-footer text-muted">').html(v.projectStart))
+                        )
+                        .appendTo($res);
+                });
+                // $('#showproject').html(res);
+                // $('#showproject').text(res);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    </script>
+</head>
+<body>
+<!-- Start your project here-->
+<div class="container my-5">
+  <!-- Section: Components -->
+  <section class="">
+    <section id="demo" class="">
+      <h3 class="text-center"><strong>Hi there, <span id="sayhitouser"></span> !</strong></h3>
+        <div class="row justify-content-between">
+            <div class="col-2">
+                <div id="digital-clock" class="btn btn-warning my-2 my-sm-0"></div>
+            </div>
+            <div class="col-2">
+                <button onclick="logout()" type="button" class="btn btn-outline-warning" data-mdb-ripple-color="dark">
+                    Log out
+                </button>
+            </div>
+        </div>
+
+      <hr class="my-5" />
+
+      <!--Section: Cards-->
+      <section>
+        <!--Grid row-->
+        <div class="row g-5">
+          <!--Grid column-->
+          <div class="col-lg-4 col-md-12 mb-4">
+              <div id="showproject1"></div>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-4 col-md-6 mb-4">
+              <div id="showproject2"></div>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-4 col-md-6 mb-4">
+              <div id="showproject3"></div>
+          </div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </section>
+      <!--Section: Cards-->
+    </section>
+  </section>
+  <!-- Section: Components -->
+</div>
+<!-- End your project here-->
+
+<!-- MDB -->
+<script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+</html>

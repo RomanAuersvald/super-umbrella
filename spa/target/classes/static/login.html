@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Reported SPA</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="css/mdb.min.css" />
+
+    <!-- Custom styles -->
+<!--    <link rel="stylesheet" href="css/style.css" />-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#login").submit(function (event) {
+                //stop submit the form, we will post it manually.
+                event.preventDefault();
+                fire_ajax_submit();
+            });
+        });
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;secure";
+        }
+
+        function fire_ajax_submit() {
+            var data = {}
+            data["username"] = $("#username").val();
+            data["password"] = $("#password").val();
+            console.log(data);
+
+            $("#login").prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "http://localhost:9001/login",
+                data: JSON.stringify(data),
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    var obj = JSON.parse(JSON.stringify(data, null, 4));
+                    //delete old cookies
+                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "userid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //create new one
+                    // document.cookie = "token=mySuperSecuritedToken; secure";
+                    // document.cookie = "userid=MySuperID; secure";
+                    setCookie("token", obj.token, 1);
+                    setCookie("userid", obj.userId, 1);
+                    setCookie("username", obj.username, 1);
+                    var cookie = document.cookie;
+                    console.log(cookie);
+                    console.log(JSON.stringify(data, null, 4));
+
+                    // var json = "<h4>Ajax Response</h4>" + JSON.stringify(data, null, 4);
+                    msg = 'Byl jsi prihlasen.';
+                    $('#feedback').html(msg);
+
+                    console.log("SUCCESS : ", data);
+                    $("#login").prop("disabled", false);
+                    window.location.replace("index.html");
+                },
+                error: function (e) {
+
+                    // var json = "<h4>Ajax Response</h4>" + e.responseText;
+                    var msg = 'Zadali jste špatné heslo.';
+                    $('#feedback').html(msg);
+
+                    console.log("ERROR : ", e);
+                    $("#login").prop("disabled", false);
+
+                }
+            });
+
+        }
+    </script>
+</head>
+<body>
+      <!--Main Navigation-->
+  <header>
+    <style>
+      #intro {
+        background-image: url(img/logo_white.png);
+        height: 100vh;
+      }
+
+      /* Height for devices larger than 576px */
+      @media (min-width: 992px) {
+        #intro {
+          margin-top: -58.59px;
+        }
+      }
+
+      .navbar .nav-link {
+        color: #fff !important;
+      }
+    </style>
+
+    <!-- Background image -->
+    <div id="intro" class="bg-image shadow-2-strong">
+      <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-md-8">
+
+              <form class="bg-white rounded shadow-5-strong p-5" id="login">
+                  <div id="feedback"></div>
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input type="text" id="username" class="form-control" />
+                  <label class="form-label" for="username">Username</label>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                  <input type="password" id="password" class="form-control" />
+                  <label class="form-label" for="password">Password</label>
+                </div>
+
+                <!-- 2 column grid layout for inline styling -->
+<!--                <div class="row mb-4">-->
+<!--                  <div class="col d-flex justify-content-center">-->
+<!--                    &lt;!&ndash; Checkbox &ndash;&gt;-->
+<!--                    <div class="form-check">-->
+<!--                      <input class="form-check-input" type="checkbox" value="" id="" checked />-->
+<!--                      <label class="form-check-label" for="form1Example3">-->
+<!--                        Remember me-->
+<!--                      </label>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  <div class="col text-center">-->
+<!--                    &lt;!&ndash; Simple link &ndash;&gt;-->
+<!--                    <a href="#!">Forgot password?</a>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+  </header>
+    <!--Main Navigation-->
+      <!-- MDB -->
+      <script type="text/javascript" src="js/mdb.min.js"></script>
+      <!-- Custom scripts -->
+<!--      <script type="text/javascript" src="js/script.js"></script>-->
+</body>
+</html>
