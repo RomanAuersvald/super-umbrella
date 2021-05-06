@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <script>
+    var ip = '172.104.136.93'; //localhost
+
     function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
@@ -59,9 +61,9 @@
         }
 
         function taskStart(id){
-            console.log('http://localhost:9001/tasks/endTaskEntry/' + id);
+            console.log('http://' + ip + ':9001/tasks/endTaskEntry/' + id);
             $.ajax({
-                url: 'http://localhost:9001/tasks/startTaskEntry/' + id,
+                url: 'http://' + ip + ':9001/tasks/startTaskEntry/' + id,
                 type: 'GET',
                 // contentType: 'application/json',
                 headers: {
@@ -80,9 +82,9 @@
         }
 
         function taskStop(id){
-            console.log('http://localhost:9001/tasks/endTaskEntry/' + id);
+            console.log('http://' + ip + ':9001/tasks/endTaskEntry/' + id);
             $.ajax({
-                url: 'http://localhost:9001/tasks/endTaskEntry/' + id,
+                url: 'http://' + ip + ':9001/tasks/endTaskEntry/' + id,
                 type: 'GET',
                 // contentType: 'application/json',
                 headers: {
@@ -136,7 +138,7 @@
 
         function callTaskAjax(s){
             $.ajax({
-                url: 'http://localhost:9001/tasks/all/' + s,
+                url: 'http://' + ip + ':9001/tasks/all/' + s,
                 type: 'GET',
                 // contentType: 'application/json',
                 headers: {
@@ -183,13 +185,13 @@
         //     return getXMLHttpRequest;
         // })(getCookie("token"));
         //
-        // var xmlHttpRequest = customXMLHttpRequest('get',"http://localhost:9001/projects/all/" + getCookie("userid"),true);
+        // var xmlHttpRequest = customXMLHttpRequest('get',"http://' + ip + ':9001/projects/all/" + getCookie("userid"),true);
         // xmlHttpRequest.send();
         // console.log(xmlHttpRequest.response);
         // console.log(xmlHttpRequest.responseText);
 
         $.ajax({
-            url: 'http://localhost:9001/projects/all/' + getCookie("userid"),
+            url: 'http://' + ip + ':9001/projects/all/' + getCookie("userid"),
             type: 'GET',
             // contentType: 'application/json',
             headers: {
