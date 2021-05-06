@@ -5,24 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="884d616f-8f24-4b2f-a65e-d75998be3176" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../spa/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../spa/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sparest/.mvn/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sparest/.mvn/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/com/reported/sparest/SparestApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/com/reported/sparest/controller/ProjectTaskRESTController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/com/reported/sparest/dao/ProjectRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/com/reported/sparest/dao/ProjectTaskRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/com/reported/sparest/dao/UserRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/com/reported/sparest/model/Project.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/com/reported/sparest/model/ProjectTask.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/com/reported/sparest/model/ProjectTaskEntry.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/com/reported/sparest/model/ReportedUser.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/com/reported/sparest/service/ReportedUserDetailsService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/key.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparest/target/classes/sample.key" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reported" beforeDir="false" afterPath="$PROJECT_DIR$/../Reported" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spa/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/../spa/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sparest/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/../sparest/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReportedInvoice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../ReportedInvoice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spa/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../spa/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spa/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../spa/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spa/target/classes/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../spa/target/classes/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparest/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparest/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sparest/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparest/src/main/java/com/reported/sparest/SparestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../sparest/src/main/java/com/reported/sparest/SparestApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparest/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../sparest/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +101,7 @@
       <workItem from="1620061159241" duration="25000" />
       <workItem from="1620061345693" duration="791000" />
       <workItem from="1620068296383" duration="247000" />
-      <workItem from="1620165482056" duration="4788000" />
+      <workItem from="1620165482056" duration="6490000" />
     </task>
     <servers />
   </component>

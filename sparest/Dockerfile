@@ -26,9 +26,10 @@ RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 #### Stage 2: A minimal docker image with command to run the app
 FROM openjdk:11-jdk
 
-ARG DEPENDENCY=/idea/target/
+ARG DEPENDENCY=/idea/target/dependency
 
 # Copy project dependencies from the build stage
-COPY --from=build ${DEPENDENCY}/classes /idea
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /idea/lib
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /idea
 
 ENTRYPOINT ["java","-cp","idea:idea/lib/*","com.reported.sparest.SparestApplication"]
